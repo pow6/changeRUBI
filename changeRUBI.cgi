@@ -1,6 +1,6 @@
 #!/usr/local/bin/python
 
-html="""Context-Type: text/html
+html='''Context-Type: text/html
 <head>
     <meta charset="UTF-8">
     <title>カクヨム，なろう，アルファのルビ一括変換ツール</title>
@@ -57,7 +57,7 @@ html="""Context-Type: text/html
 </div>
 </body>
 </html>
-"""
+'''
 import cgi
 form = cgi.FieldStorage()
 text = form.getfirst("originText","")
