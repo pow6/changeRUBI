@@ -62,6 +62,6 @@ import cgi
 form = cgi.FieldStorage()
 text = form.getfirst("originText","")
 radio = form.getfirst("mode","")
-print html % "変換結果"
-print html % text
-print html % radio
+print("変換結果")
+print(html % text)
+print(html % radio)
