@@ -119,15 +119,15 @@ else:
 #最終調整：
 output_alpha = regex.sub("・+", "・", output_alpha)
 output_kaku = regex.sub(r"(\|)(.*)(《・*》)", r"《《\2》》", output_kaku)
-context = {
-    "output_kaku": output_kaku,
-    "output_narou": output_narou,
-    "output_alpha": output_alpha,
-    "mode": mode,
-    "changed_list": changed_list,
-    "changed_kaku": regex.findall(ptrnFin_kaku, output_kaku)+regex.findall(ptrnSt_kaku, output_kaku),
-    "changed_narou": regex.findall(ptrnFin_kaku, output_narou),
-    "changed_alpha": regex.findall(ptrn_alpha, output_alpha),
-}
 
-print(html % (mode, src))
+output_kaku = output_kaku
+output_narou = output_narou
+output_alpha = output_alpha
+mode = mode
+changed_list = changed_list
+changed_kaku = regex.findall(ptrnFin_kaku, output_kaku)+regex.findall(ptrnSt_kaku, output_kaku)
+changed_narou = regex.findall(ptrnFin_kaku, output_narou)
+changed_alpha = regex.findall(ptrn_alpha, output_alpha)
+
+
+print(html % (output_kaku,output_narou))
