@@ -55,7 +55,7 @@ html='''Content-Type: text/html
       </form>
       <h3>%s</h3>
       <p>%s</p>
-      <p>%s</p>
+      <p>aaa</p>
     </div>
   </body>
 </html>
@@ -64,6 +64,5 @@ import cgi
 form = cgi.FieldStorage()
 text = form.getfirst("originText","")
 radio = form.getfirst("mode","")
-print html % "変換結果"
 print html % text
 print html % radio
