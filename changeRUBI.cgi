@@ -37,9 +37,9 @@ html='''Content-Type: text/html
     <div class="sentence">
       <h3>変換元サイト</h3>
       <form method="post" action="changeRUBI.cgi">
-        <input type="radio" name="mode" value="kaku" checked>カクヨム 
-        <input type="radio" name="mode" value="narou">なろう 
-        <input type="radio" name="mode" value="alpha">アルファポリス 
+        <input type="radio" name="mode" value="kaku" checked/>カクヨム 
+        <input type="radio" name="mode" value="narou"/>なろう 
+        <input type="radio" name="mode" value="alpha"/>アルファポリス 
         <h3>変換したい文章を入力</h3>
         <p>
           <button type="submit" name="action">変換する</button>
@@ -64,6 +64,6 @@ import cgi
 form = cgi.FieldStorage()
 text = form.getfirst("originText","")
 radio = form.getfirst("mode","")
-print "変換結果"
+print html % "変換結果"
 print html % text
 print html % radio
