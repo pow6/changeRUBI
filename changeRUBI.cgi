@@ -1,5 +1,5 @@
 #!/usr/local/bin/python
-
+# -*- coding: utf-8 -*-
 html='''Context-Type: text/html
 
 <html>
