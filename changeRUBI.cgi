@@ -41,14 +41,14 @@ html='''Content-Type: text/html
         <input type="radio" name="mode" value="narou"/>なろう 
         <input type="radio" name="mode" value="alpha"/>アルファポリス 
         <h3>変換したい文章を入力</h3>
-        <textarea name="originText" cols="50" rows="10" name="input_str" placeholder="変換したい文章を入力"></textarea>
+        <textarea name="originText" id="originText" cols="50" rows="10" name="input_str" placeholder="変換したい文章を入力"></textarea>
         <p>
           <input type="submit" value="変換する">
           <!--button type="button" onclick="paste()">貼り付け</button-->
           <button type="button" onclick="putSample()">変換サンプルを表示</button>
           <script>
                 function  putSample() {
-                    document.getElementsByName("originText").value = "カクヨム形式:\n\t漢字《かんじ》\n\t|テキスト《文章》\n\t《《強調するぜよ》》\nなろう形式：\n\t漢字(かんじ)\n\t|強調《・・》\nアルファ形式：\n\t#文字__テキスト__#\n\t#強調__・__#";
+                    document.getElementById("originText").value = "カクヨム形式:\n\t漢字《かんじ》\n\t|テキスト《文章》\n\t《《強調するぜよ》》\nなろう形式：\n\t漢字(かんじ)\n\t|強調《・・》\nアルファ形式：\n\t#文字__テキスト__#\n\t#強調__・__#";
                 }
           </script>
         </p>
