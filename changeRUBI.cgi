@@ -4,7 +4,7 @@ html='''Content-Type: text/html
 
 <html>
   <head>
-    <meta charset="UTF-8n">
+    <meta charset="UTF-8">
     <title>カクヨム，なろう，アルファのルビ一括変換ツール</title>
     <style type="text/css">
         <!--
@@ -64,6 +64,6 @@ import cgi
 form = cgi.FieldStorage()
 text = form.getfirst("originText","")
 radio = form.getfirst("mode","")
-print("変換結果")
-print(html % text)
-print(html % radio)
+print "変換結果"
+print html % text
+print html % radio
