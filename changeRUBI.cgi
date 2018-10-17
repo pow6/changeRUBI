@@ -60,10 +60,74 @@ html='''Content-Type: text/html
 </html>
 '''
 import cgi
+import regex
 form = cgi.FieldStorage()
-radio = form.getvalue("mode")
-text = form.getvalue("originText")
+mode = form.getvalue("mode")
+src = form.getvalue("originText")
 
+output_kaku = src
+output_narou = src
+output_alpha = src
+ptrnSt_kaku = "(《《.*》》)"              #《《テキスト》》：カクヨムの強調機能
+ptrnNo_kaku = "(\|?\p{Han}*《.*》)"    #テキスト《ルビ》：カクヨムのルビ機能
+ptrnFin_kaku = "(\|.*《.*》)"          #|テキスト《ルビ》：カクヨム変換後形式
+ptrn_narou = "(\|?\p{Han}*\(.*\))"        #テキスト（ルビ）：なろうのルビ機能
+ptrn_alpha = "(#.*__.*__#)"           ##テキスト__ルビ__#：アルファポリスのルビ機能
+if mode == "kaku":
+    mode = "カクヨム"
+    changed_list = regex.findall(ptrnNo_kaku, src)
+    for word in changed_list:
+        #changed_list から　《《》》の形式を|テキスト《ルビ》の形式にする処理
+        if regex.match(ptrnSt_kaku, word):
+            pt = "・" * (len(word)-4)
+            dst = word.replace("《《", "|").replace("》》", "《"+pt+"》")
+            output_kaku = output_kaku.replace(word, dst)
+        else:
+            #変換後の文字列を作成 | を追加し，《》を（）にする(なろう形式) ←なろうは，《》でもOkなので，《》に統一
+            #if regex.match("|.*", word):
+            if (not word.startswith("|")) and (not word.startswith("《")):
+                dst = "|"+word
+                output_kaku = output_kaku.replace(word, dst)
+        #|テキスト《ルビ》の形式になっているので，そこから，なろう，アルファ形式を作成
+        #output_narou = output_kaku.replace("《", "(").replace("》", ")")
+        output_narou = output_kaku
+        #カクヨム，なろう互換形式から，アルファ形式を作成
+        output_alpha = output_kaku.replace("|", "#").replace("《", "__").replace("》", "__#")
+elif mode == "narou":
+    mode = "なろう"
+    changed_list = regex.findall(ptrn_narou, src)
+    for word in changed_list:
+        if (not word.startswith("|")) and (not word.startswith("《")):
+            dst = "|"+word
+            output_narou = output_narou.replace(word, dst)
+    output_kaku = output_narou.replace("(", "《").replace(")", "》")
+    output_alpha = output_kaku.replace("|", "#").replace("《", "__").replace("》", "__#")
+elif mode == "alpha":
+    mode = "アルファポリス"
+    changed_list = regex.findall(ptrn_alpha, src)
+    output_narou = output_alpha.replace("__#", "》").replace("__", "《").replace("#", "|")
+    output_kaku = output_narou
+    for word in changed_list:
+        # changed_list から　|〇〇《・》の形式で，・の個数を調整する
+        if regex.serch("・", word):
+            pt = "・" * (len(word) - 3)
+            dst = regex.sub(r"・+", pt)
+            output_kaku = output_kaku.replace(word, dst)
 
+else:
+    changed_list = "エラー"
+#最終調整：
+output_alpha = regex.sub("・+", "・", output_alpha)
+output_kaku = regex.sub(r"(\|)(.*)(《・*》)", r"《《\2》》", output_kaku)
+context = {
+    "output_kaku": output_kaku,
+    "output_narou": output_narou,
+    "output_alpha": output_alpha,
+    "mode": mode,
+    "changed_list": changed_list,
+    "changed_kaku": regex.findall(ptrnFin_kaku, output_kaku)+regex.findall(ptrnSt_kaku, output_kaku),
+    "changed_narou": regex.findall(ptrnFin_kaku, output_narou),
+    "changed_alpha": regex.findall(ptrn_alpha, output_alpha),
+}
 
-print html % (radio, text)
+print(html % (radio, text))
