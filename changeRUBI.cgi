@@ -36,12 +36,12 @@ html='''Content-Type: text/html
     </p>
     <div class="sentence">
       <h3>変換元サイト</h3>
-      <form method="post" action="changeRUBI.cgi">
+      <form method="post" action="index.cgi">
         <input type="radio" name="mode" value="kaku" checked/>カクヨム 
         <input type="radio" name="mode" value="narou"/>なろう 
         <input type="radio" name="mode" value="alpha"/>アルファポリス 
         <h3>変換したい文章を入力</h3>
-        <textarea id="originText" cols="50" rows="10" name="input_str" placeholder="変換したい文章を入力"></textarea>
+        <textarea name="originText" cols="50" rows="10" name="input_str" placeholder="変換したい文章を入力"></textarea>
         <p>
           <input type="submit" value="変換する">
           <!--button type="button" onclick="paste()">貼り付け</button-->
@@ -50,19 +50,20 @@ html='''Content-Type: text/html
                 function  putSample() {
                     document.getElementById("originText").value = "カクヨム形式:\n\t漢字《かんじ》\n\t|テキスト《文章》\n\t《《強調するぜよ》》\nなろう形式：\n\t漢字(かんじ)\n\t|強調《・・》\nアルファ形式：\n\t#文字__テキスト__#\n\t#強調__・__#";
                 }
-            </script>
+          </script>
         </p>
       </form>
       <h3>%s</h3>
-      <p>%s</p>
-      <p>%s</p>
-    </div>
+%s
+     </div>
   </body>
 </html>
 '''
 import cgi
 form = cgi.FieldStorage()
-text = form.getfirst("originText","")
-radio = form.getfirst("mode","")
-print html % text
-print html % radio
+radio = form.getvalue("mode")
+text = form.getvalue("originText")
+
+
+
+print html % (radio, text)
