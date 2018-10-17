@@ -130,4 +130,4 @@ context = {
     "changed_alpha": regex.findall(ptrn_alpha, output_alpha),
 }
 
-print(html % (radio, text))
+print(html % (mode, src))
