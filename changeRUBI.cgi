@@ -36,7 +36,7 @@ html='''Content-Type: text/html
     </p>
     <div class="sentence">
       <h3>変換元サイト</h3>
-      <form method="post" action="index.cgi">
+      <form method="post" action="changeRUBI.cgi">
         <input type="radio" name="mode" value="kaku" checked/>カクヨム 
         <input type="radio" name="mode" value="narou"/>なろう 
         <input type="radio" name="mode" value="alpha"/>アルファポリス 
@@ -113,7 +113,6 @@ elif mode == "alpha":
             pt = "・" * (len(word) - 3)
             dst = regex.sub(r"・+", pt)
             output_kaku = output_kaku.replace(word, dst)
-
 else:
     changed_list = "エラー"
 #最終調整：
