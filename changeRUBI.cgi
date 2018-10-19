@@ -2,20 +2,13 @@
 # -*- coding: utf-8 -*-
 html='''Content-Type: text/html
 
+
 <html>
   <head>
     <meta charset="UTF-8">
     <title>カクヨム，なろう，アルファのルビ一括変換ツール</title>
-    <style type="text/css">
-        <!--
-        h1{
-            font-size:20px;
-        }
-        div.sentence{
-            display: inline-block;
-        }
-        -->
-    </style>
+    <link rel="stylesheet" href="/html/changeRUBI/changeRUBI.css">
+    <script type="text/javascript" src="https://app.pow6.net/html/changeRUBI/changeRUBI.js"></script>
   </head>
   <body>
     <hr color="#FF8000" size="5">
@@ -34,25 +27,27 @@ html='''Content-Type: text/html
       <br>　２．変換する文章を入力 
       <br>　３．『変換する』をクリックすると，それぞれのルビの形式に変換した文章を表示します 
     </p>
-    <div class="sentence">
       <h3>変換元サイト</h3>
       <form method="post" action="changeRUBI.cgi">
-        <input type="radio" name="mode" value="kaku" checked/>カクヨム 
-        <input type="radio" name="mode" value="narou"/>なろう 
-        <input type="radio" name="mode" value="alpha"/>アルファポリス 
+        <div class="radio">
+          <input type="radio" name="mode" value="kaku" id="kaku" checked/><label for="kaku">カクヨム</label>
+          <input type="radio" name="mode" value="narou" id="narou"/><label for="narou">なろう</label> 
+          <input type="radio" name="mode" value="alpha" id="alpha"/><label for="alpha">アルファポリス</label>
+        </div>
+        <br cloear="all">
         <h3>変換したい文章を入力</h3>
-        <textarea name="originText" id="originText" cols="50" rows="10" name="input_str" placeholder="変換したい文章を入力"></textarea>
-        <p>
+        <div class="sentence">
+          <p>
+          <textarea name="originText" id="originText" cols="50" rows="10" name="input_str" placeholder="変換したい文章を入力"></textarea>
+          </p> 
+          <p>
           <input type="submit" value="変換する">
           <!--button type="button" onclick="paste()">貼り付け</button-->
-          <script>
-                function  putSample() {
-                    document.getElementById("originText").value = "カクヨム形式:\n\t漢字《かんじ》\n\t|テキスト《文章》\n\t《《強調するぜよ》》\nなろう形式：\n\t漢字(かんじ)\n\t|強調《・・》\nアルファ形式：\n\t#文字__テキスト__#\n\t#強調__・__#";
-                }
-          </script>
-        </p>
+          <button type="button" onclick="putSample()">変換サンプルを表示</button>
+          </p>
+        </div>
+
       </form>
-     </div>
   </body>
 </html>
 '''
@@ -67,30 +62,22 @@ result='''
 <br>
 <div class="sentence">
     <h3>カクヨム</h3>
-    <button id="button_kaku">クリップボードにコピー</button>
+    <button id="button_kaku" onclick="copy_kaku()">クリップボードにコピー</button>
     <div class="enclosure"><textarea cols="50" rows="10" id="str_kaku">%s</textarea></div>
 </div>
 <div class="sentence">
     <h3>なろう</h3>
-    <button id="button_narou">クリップボードにコピー</button>
+    <button id="button_narou" onclick="copy_narou()">クリップボードにコピー</button>
     <div class="enclosure"><textarea cols="50" rows="10" id="str_narou">%s</textarea></div>
 </div>
 <div class="sentence">
     <h3>アルファポリス</h3>
-    <button id="button_alpha">クリップボードにコピー</button>
+    <button id="button_alpha" onclick="copy_alpha()">クリップボードにコピー</button>
     <div class="enclosure"><textarea cols="50" rows="10" id="str_alpha">%s</textarea></div>
 </div>
 '''
 
-js ='''Content-Type: application/x-javascript
-<button type="button" onclick="putSample()">変換サンプルを表示</button>
-<script>
-    function  putSample() {
-            document.getElementById("originText").value = "カクヨム形式:\n\t漢字《かんじ》\n\t|テキスト《文章》\n\t《《強調するぜよ》》\nなろう形式：\n\t漢字(かんじ)\n\t|強調《・・》\nアルファ形式：\n\t#文字__テキスト__#\n\t#強調__・__#";
-        }
-</script>
-'''
-
+import sys
 import cgi
 import re
 import regex #regex モジュールでの\p{Han}が上手く動かないので，あんま意味ない
@@ -119,7 +106,7 @@ else:
         for word in changed_list:
             #changed_list から　《《》》の形式を|テキスト《ルビ》の形式にする処理
             if regex.match(ptrnSt_kaku, word):
-                pt = "・" * (len(word)-4)
+                pt = "・" * (len(word.decode('utf-8'))-4)
                 dst = word.replace("《《", "|").replace("》》", "《"+pt+"》")
                 output_kaku = output_kaku.replace(word, dst)
             else:
@@ -150,7 +137,7 @@ else:
         for word in changed_list:
             # changed_list から　|〇〇《・》の形式で，・の個数を調整する
             if regex.search("・", word):
-                pt = "・" * (len(word) - 3)
+                pt = "・" * (len(word.decode('utf-8')) - 3)
                 dst = regex.sub("・+", "・",pt)
                 output_kaku = output_kaku.replace(word, dst)
     else:
@@ -180,5 +167,4 @@ else:
     changed_alpha = ','.join(changed_alpha)
 
     print(html)
-    #print(js)
     print(result % (mode,changed_list,changed_kaku,changed_narou,changed_alpha,output_kaku,output_narou,output_alpha))

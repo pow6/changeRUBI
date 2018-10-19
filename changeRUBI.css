@@ -1,0 +1,54 @@
+<style type="text/css">
+h1{
+    font-size:23px;
+}
+div.sentence{
+    display: inline-block;
+}
+.radio input{
+  display: none;
+}
+.radio label{
+  display: block;
+  float: left;
+  cursor: pointer;
+  width: 100px;
+  margin: 0;
+  padding: 12px 35px;
+  border-right: 1px solid #abb2b7;
+  background: #bdc3c7;
+  color: #555e64;
+  font-size: 14px;
+  text-align: center;
+  line-height: 1;
+  transition: .2s;
+}
+.radio label:first-of-type{
+  border-radius: 3px 0 0 3px;
+}
+.radio label:last-of-type{
+  border-right: 0px;
+  border-radius: 0 3px 3px 0;
+}
+.radio input[type="radio"]:checked + label {
+  background-color: #a1b91d;
+  color: #fff;
+}
+button.square_btn {
+    position: relative;
+    display: inline-block;
+    padding: 0.25em 0.5em;
+    text-decoration: none;
+    color: #FFF;
+    background: #fd9535;/*色*/
+    border-radius: 4px;/*角の丸み*/
+    box-shadow: inset 0 2px 0 rgba(255,255,255,0.2), inset 0 -2px 0 rgba(0, 0, 0, 0.05);
+    font-weight: bold;
+    border: solid 2px #d27d00;/*線色*/
+}
+
+button.square_btn:active {/*押したとき*/
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.30);
+}
+
+</style>
