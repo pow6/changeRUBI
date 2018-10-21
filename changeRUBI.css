@@ -1,12 +1,15 @@
-<style type="text/css">
 h1{
     font-size:23px;
 }
-div.sentence{
+
+.sentence{
     display: inline-block;
 }
 .radio input{
   display: none;
+}
+.intro{
+  font-size:15;
 }
 .radio label{
   display: block;
@@ -32,23 +35,56 @@ div.sentence{
 }
 .radio input[type="radio"]:checked + label {
   background-color: #a1b91d;
-  color: #fff;
-}
-button.square_btn {
-    position: relative;
-    display: inline-block;
-    padding: 0.25em 0.5em;
-    text-decoration: none;
-    color: #FFF;
-    background: #fd9535;/*色*/
-    border-radius: 4px;/*角の丸み*/
-    box-shadow: inset 0 2px 0 rgba(255,255,255,0.2), inset 0 -2px 0 rgba(0, 0, 0, 0.05);
-    font-weight: bold;
-    border: solid 2px #d27d00;/*線色*/
+  color: rgb(0, 0, 0);
 }
 
-button.square_btn:active {/*押したとき*/
-    box-shadow: 0 0 2px rgba(0, 0, 0, 0.30);
+.square_btn {
+  display: inline-block;
+  max-width: 180px;
+  text-align: left;
+  border: 2px solid #9ec34b;
+  font-size: 16px;
+  color: #000000;
+  background-color: #FFF;
+  text-decoration: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  transition: .4s;
 }
 
-</style>
+.square_btn:hover {
+  background-color: #9ec34b;
+  border-color: #cbe585;
+  color: #FFF;
+}
+
+.likeButton {
+  background-color:#ffe1ef;
+  border:1px solid #ccc;
+  margin:5px;
+  cursor:pointer;
+}
+
+.box {
+  padding: 0.5em 1em;
+  margin: 2em 0;
+  color: #232323;
+  background: #fff8e8;
+  border-left: solid 10px #ffc06e;
+}
+.box p {
+  margin: 0; 
+  padding: 0;
+}
+
+.ef {
+	position: relative;
+	padding: 7px 15px;
+	border: 0;
+	border: 1px solid #1b2538;
+	background: transparent;
+}
+
+.ef:focus {
+	border: 1px solid #3cb5da;
+}

@@ -2,79 +2,78 @@
 # -*- coding: utf-8 -*-
 html='''Content-Type: text/html
 
-
 <html>
   <head>
     <meta charset="UTF-8">
     <title>カクヨム，なろう，アルファのルビ一括変換ツール</title>
-    <link rel="stylesheet" href="/html/changeRUBI/changeRUBI.css">
-    <script type="text/javascript" src="https://app.pow6.net/html/changeRUBI/changeRUBI.js"></script>
+    <link rel="stylesheet" href="changeRUBI/changeRUBI.css">
+    <script type="text/javascript" src="changeRUBI/changeRUBI.js"></script>
   </head>
   <body>
     <hr color="#FF8000" size="5">
-    <h1>カクヨム，なろう，アルファのルビ一括変換ツールver.1.0（べーた）</h1>
+    <h1>カクヨム，なろう，アルファのルビ一括変換ツールver.0.1（べーた）</h1>
     <p style="text-align: right">製作者：RealTakashi　ホームページ：
       <a href="https://pow6.net" target="_blank">最弱高専生の書きなぐり</a>　Twitter:
       <a href="https://twitter.com/simejiEgg" target="_blank">@simejiEgg</a>
     </p>
     <hr size="3">
-    <p>3大小説投稿サイト（カクヨム，小説家になろう，アルファポリス）のルビの形式が違うので，一括で変換できるツールを作成しました。 
-      <br>カクヨムで書いた小説をなろうとか，アルファに転載する時に使ってくれぇ。 
-      <br>一応，ミスの無いように作ったつもりですが，やらかしていたら教えてくだせぇ。（←べーた版だしね←べーたって書けば許されると思ってる奴） 
-    </p>
-    <p>使い方： 
+    <div class="box">使い方：
       <br>　１．変換元の文章のサイトを選択 
-      <br>　２．変換する文章を入力 
+      <br>　２．変換したい文章を入力 
       <br>　３．『変換する』をクリックすると，それぞれのルビの形式に変換した文章を表示します 
-    </p>
+      <br>※変換サンプル⇒
+      <a onclick="putSampleKaku()" class="likeButton">カクヨム</a>
+      <a onclick="putSampleNarou()" class="likeButton">なろう</a>
+      <a onclick="putSampleAlpha()" class="likeButton">アルファポリス</a>
+    </div>
       <h3>変換元サイト</h3>
       <form method="post" action="changeRUBI.cgi">
-        <div class="radio">
-          <input type="radio" name="mode" value="kaku" id="kaku" checked/><label for="kaku">カクヨム</label>
-          <input type="radio" name="mode" value="narou" id="narou"/><label for="narou">なろう</label> 
-          <input type="radio" name="mode" value="alpha" id="alpha"/><label for="alpha">アルファポリス</label>
-        </div>
-        <br cloear="all">
-        <h3>変換したい文章を入力</h3>
         <div class="sentence">
-          <p>
-          <textarea name="originText" id="originText" cols="50" rows="10" name="input_str" placeholder="変換したい文章を入力"></textarea>
-          </p> 
-          <p>
-          <input type="submit" value="変換する">
+          <div class="radio">
+            <input type="radio" name="mode" value="kaku" id="kaku" checked/><label for="kaku">カクヨム</label>
+            <input type="radio" name="mode" value="narou" id="narou"/><label for="narou">なろう</label> 
+            <input type="radio" name="mode" value="alpha" id="alpha"/><label for="alpha">アルファポリス</label>
+          </div>
+          
           <!--button type="button" onclick="paste()">貼り付け</button-->
-          <button type="button" onclick="putSample()">変換サンプルを表示</button>
+          </div>
+          <p><button type="submit" class="square_btn">変換する</button></p>
+          <p>
+          <textarea class="ef" name="originText" id="originText" cols="100" rows="12" name="input_str" placeholder="変換したい文章を入力"></textarea>
           </p>
-        </div>
-
+          <span class="focus_bg"></span>
       </form>
   </body>
 </html>
 '''
 
 result='''
-<h1>変換結果</h1>
+<head>
+    <link rel="stylesheet" href="/changeRUBI/changeRUBI.css">
+    <script type="text/javascript" src="/changeRUBI/changeRUBI.js"></script>
+</head>
+<hr color="#FF8000" size="5">
 <h3>変換モード【%s】</h3>
 <br>変換したルビ：%s
-<br>変換後全ルビ：カクヨム %s
-<br>　　　　　　　なろう　 %s
-<br>　　　　　　　アルファ %s
 <br>
 <div class="sentence">
     <h3>カクヨム</h3>
-    <button id="button_kaku" onclick="copy_kaku()">クリップボードにコピー</button>
-    <div class="enclosure"><textarea cols="50" rows="10" id="str_kaku">%s</textarea></div>
+    <button id="button_kaku" onclick="copy_kaku()" class="square_btn">コピー</button>
+    <div class="enclosure"><textarea cols="50" rows="10" id="str_kaku" class="ef">%s</textarea></div>
 </div>
 <div class="sentence">
     <h3>なろう</h3>
-    <button id="button_narou" onclick="copy_narou()">クリップボードにコピー</button>
-    <div class="enclosure"><textarea cols="50" rows="10" id="str_narou">%s</textarea></div>
+    <button id="button_narou" onclick="copy_narou()" class="square_btn">コピー</button>
+    <div class="enclosure"><textarea cols="50" rows="10" id="str_narou" class="ef">%s</textarea></div>
 </div>
 <div class="sentence">
     <h3>アルファポリス</h3>
-    <button id="button_alpha" onclick="copy_alpha()">クリップボードにコピー</button>
-    <div class="enclosure"><textarea cols="50" rows="10" id="str_alpha">%s</textarea></div>
+    <button id="button_alpha" onclick="copy_alpha()" class="square_btn">コピー</button>
+    <div class="enclosure"><textarea cols="50" rows="10" id="str_alpha" class="ef">%s</textarea></div>
 </div>
+<br>変換後全ルビ：カクヨム %s
+<br>　　　　　　　なろう　 %s
+<br>　　　　　　　アルファ %s
 '''
 
 import sys
@@ -85,7 +84,7 @@ form = cgi.FieldStorage()
 mode = form.getvalue("mode")
 src = form.getvalue("originText")
 
-#入力が何もない時のエラー処理
+#入力が何もない時のエラー処理（←エラーじゃなく例外処理的な）
 if not src:
     print(html)
 else:
@@ -161,10 +160,10 @@ else:
     changed_alpha = regex.findall(ptrn_alpha, output_alpha)
 
     #リスト型を文字列に変換
-    changed_list = ','.join(changed_list)
-    changed_kaku = ','.join(changed_kaku)
-    changed_narou = ','.join(changed_narou)
-    changed_alpha = ','.join(changed_alpha)
+    changed_list = '  '.join(changed_list)
+    changed_kaku = '  '.join(changed_kaku)
+    changed_narou = '  '.join(changed_narou)
+    changed_alpha = '  '.join(changed_alpha)
 
     print(html)
-    print(result % (mode,changed_list,changed_kaku,changed_narou,changed_alpha,output_kaku,output_narou,output_alpha))
+    print(result % (mode,output_kaku,output_narou,output_alpha,changed_list,changed_kaku,changed_narou,changed_alpha))
