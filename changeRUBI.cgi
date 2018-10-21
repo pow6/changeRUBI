@@ -54,7 +54,6 @@ result='''
 </head>
 <hr color="#FF8000" size="5">
 <h3>変換モード【%s】</h3>
-<br>変換したルビ：%s
 <br>
 <div class="sentence">
     <h3>カクヨム</h3>
@@ -71,6 +70,7 @@ result='''
     <button id="button_alpha" onclick="copy_alpha()" class="square_btn">コピー</button>
     <div class="enclosure"><textarea cols="50" rows="10" id="str_alpha" class="ef">%s</textarea></div>
 </div>
+<br>変換したルビ：%s
 <br>変換後全ルビ：カクヨム %s
 <br>　　　　　　　なろう　 %s
 <br>　　　　　　　アルファ %s
