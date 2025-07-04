@@ -1,0 +1,90 @@
+h1{
+    font-size:23px;
+}
+
+.sentence{
+    display: inline-block;
+}
+.radio input{
+  display: none;
+}
+.intro{
+  font-size:15;
+}
+.radio label{
+  display: block;
+  float: left;
+  cursor: pointer;
+  width: 100px;
+  margin: 0;
+  padding: 12px 35px;
+  border-right: 1px solid #abb2b7;
+  background: #bdc3c7;
+  color: #555e64;
+  font-size: 14px;
+  text-align: center;
+  line-height: 1;
+  transition: .2s;
+}
+.radio label:first-of-type{
+  border-radius: 3px 0 0 3px;
+}
+.radio label:last-of-type{
+  border-right: 0px;
+  border-radius: 0 3px 3px 0;
+}
+.radio input[type="radio"]:checked + label {
+  background-color: #a1b91d;
+  color: rgb(0, 0, 0);
+}
+
+.square_btn {
+  display: inline-block;
+  max-width: 180px;
+  text-align: left;
+  border: 2px solid #9ec34b;
+  font-size: 16px;
+  color: #000000;
+  background-color: #FFF;
+  text-decoration: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  transition: .4s;
+}
+
+.square_btn:hover {
+  background-color: #9ec34b;
+  border-color: #cbe585;
+  color: #FFF;
+}
+
+.likeButton {
+  background-color:#ffe1ef;
+  border:1px solid #ccc;
+  margin:5px;
+  cursor:pointer;
+}
+
+.box {
+  padding: 0.5em 1em;
+  margin: 2em 0;
+  color: #232323;
+  background: #fff8e8;
+  border-left: solid 10px #ffc06e;
+}
+.box p {
+  margin: 0; 
+  padding: 0;
+}
+
+.ef {
+	position: relative;
+	padding: 7px 15px;
+	border: 0;
+	border: 1px solid #1b2538;
+	background: transparent;
+}
+
+.ef:focus {
+	border: 1px solid #3cb5da;
+}
