@@ -18,6 +18,7 @@ html='''Content-Type: text/html
     <title>カクヨム，なろう，アルファのルビ一括変換ツール</title>
     <meta content="3大小説投稿サイト（カクヨム，小説家になろう，アルファポリス）のルビの形式が違うので，一括で変換できるツール（非公式）。自分の小説を他サイトに転載するときなどに使ってください" name="description">
     
+<<<<<<< HEAD
     <link rel="stylesheet" href="./changeRUBI.css">
     <link rel="shortcut icon" href="./changeRUBI_icon.png">
     <script type="text/javascript" src="./changeRUBI.js"></script>
@@ -27,6 +28,19 @@ html='''Content-Type: text/html
     <h1>カクヨム，なろう，アルファのルビ一括変換ツールver.1.1</h1>
     <p style="text-align: right">製作者：Arutaka　ホームページ：
       <a href="https://pow6.net" target="_blank">https://pow6.net</a></p>
+=======
+    <link rel="stylesheet" href="changeRUBI/changeRUBI.css">
+    <link rel="shortcut icon" href="changeRUBI/changeRUBI_icon.png">
+    <script type="text/javascript" src="changeRUBI/changeRUBI.js"></script>
+  </head>
+  <body>
+    <hr color="#FF8000" size="5">
+    <h1>カクヨム，なろう，アルファのルビ一括変換ツールver.1.0</h1>
+    <p style="text-align: right">製作者：Arutaka　ホームページ：
+      <a href="https://pow6.net" target="_blank">https://pow6.net</a>　旧Twitter:
+      <a href="https://twitter.com/simejiEgg" target="_blank">@simejiEgg</a>
+    </p>
+>>>>>>> 2da8a45491965a3ca1034e14119d7126a474bf28
     <hr size="3">
     <div class="intro">
     <p>　3大小説投稿サイト（カクヨム，小説家になろう，アルファポリス）のルビの形式が違うので，一括で変換できるツールを作成しました。 
@@ -66,8 +80,13 @@ html='''Content-Type: text/html
 
 result='''
 <head>
+<<<<<<< HEAD
     <link rel="stylesheet" href="./changeRUBI.css">
     <script type="text/javascript" src="./changeRUBI.js"></script>
+=======
+    <link rel="stylesheet" href="/changeRUBI/changeRUBI.css">
+    <script type="text/javascript" src="/changeRUBI/changeRUBI.js"></script>
+>>>>>>> 2da8a45491965a3ca1034e14119d7126a474bf28
 </head>
 <hr color="#FF8000" size="5">
 <h3>変換モード【%s】</h3>
@@ -96,7 +115,11 @@ result='''
 import sys
 import cgi
 import re
+<<<<<<< HEAD
 
+=======
+import regex #regex モジュールでの\p{Han}が上手く動かないので，あんま意味ない
+>>>>>>> 2da8a45491965a3ca1034e14119d7126a474bf28
 form = cgi.FieldStorage()
 mode = form.getvalue("mode")
 src = form.getvalue("originText")
@@ -105,6 +128,7 @@ src = form.getvalue("originText")
 if not src:
     print(html)
 else:
+<<<<<<< HEAD
     output_kaku = src
     output_narou = src
     output_alpha = src
@@ -128,28 +152,75 @@ else:
                     dst = "|" + word
                     output_kaku = output_kaku.replace(word, dst)
             #|テキスト《ルビ》の形式になっているので，そこから，なろう，アルファ形式を作成
+=======
+
+    output_kaku = src
+    output_narou = src
+    output_alpha = src
+    ptrnSt_kaku = "(《《.*》》)"              #《《テキスト》》：カクヨムの強調機能
+    #ptrnNo_kaku = "(\|?\p{Han}*《.*》)"    #テキスト《ルビ》：カクヨムのルビ機能
+    ptrnNo_kaku = "(\|?[一-龥]*《.*》)"    #テキスト《ルビ》：カクヨムのルビ機能
+    ptrnFin_kaku = "(\|.*《.*》)"          #|テキスト《ルビ》：カクヨム変換後形式
+    #ptrn_narou = "(\|?\p{Han}*\(.*\))"        #テキスト（ルビ）：なろうのルビ機能
+    ptrn_narou = "(\|?[一-龥]*\(.*\))"        #テキスト（ルビ）：なろうのルビ機能
+    ptrn_alpha = "(#.*__.*__#)"           ##テキスト__ルビ__#：アルファポリスのルビ機能
+    if mode == "kaku":
+        mode = "カクヨム"
+        changed_list = regex.findall(ptrnNo_kaku, src)
+        for word in changed_list:
+            #changed_list から　《《》》の形式を|テキスト《ルビ》の形式にする処理
+            if regex.match(ptrnSt_kaku, word):
+                pt = "・" * (len(word.decode('utf-8'))-4)
+                dst = word.replace("《《", "|").replace("》》", "《"+pt+"》")
+                output_kaku = output_kaku.replace(word, dst)
+            else:
+                #変換後の文字列を作成 | を追加し，《》を（）にする(なろう形式) ←なろうは，《》でもOkなので，《》に統一
+                #if regex.match("|.*", word):
+                if (not word.startswith("|")) and (not word.startswith("《")):
+                    dst = "|"+word
+                    output_kaku = output_kaku.replace(word, dst)
+            #|テキスト《ルビ》の形式になっているので，そこから，なろう，アルファ形式を作成
+            #output_narou = output_kaku.replace("《", "(").replace("》", ")")
+>>>>>>> 2da8a45491965a3ca1034e14119d7126a474bf28
             output_narou = output_kaku
             #カクヨム，なろう互換形式から，アルファ形式を作成
             output_alpha = output_kaku.replace("|", "#").replace("《", "__").replace("》", "__#")
     elif mode == "narou":
         mode = "なろう"
+<<<<<<< HEAD
         changed_list = re.findall(ptrn_narou, src)
         for word in changed_list:
             if (not word.startswith("|")) and (not word.startswith("《")):
                 dst = "|" + word
+=======
+        changed_list = regex.findall(ptrn_narou, src)
+        for word in changed_list:
+            if (not word.startswith("|")) and (not word.startswith("《")):
+                dst = "|"+word
+>>>>>>> 2da8a45491965a3ca1034e14119d7126a474bf28
                 output_narou = output_narou.replace(word, dst)
         output_kaku = output_narou.replace("(", "《").replace(")", "》")
         output_alpha = output_kaku.replace("|", "#").replace("《", "__").replace("》", "__#")
     elif mode == "alpha":
         mode = "アルファポリス"
+<<<<<<< HEAD
         changed_list = re.findall(ptrn_alpha, src)
+=======
+        changed_list = regex.findall(ptrn_alpha, src)
+>>>>>>> 2da8a45491965a3ca1034e14119d7126a474bf28
         output_narou = output_alpha.replace("__#", "》").replace("__", "《").replace("#", "|")
         output_kaku = output_narou
         for word in changed_list:
             # changed_list から　|〇〇《・》の形式で，・の個数を調整する
+<<<<<<< HEAD
             if re.search("・", word):
                 pt = "・" * (len(word) - 3)
                 dst = re.sub("・+", "・", pt)
+=======
+            if regex.search("・", word):
+                pt = "・" * (len(word.decode('utf-8')) - 3)
+                dst = regex.sub("・+", "・",pt)
+>>>>>>> 2da8a45491965a3ca1034e14119d7126a474bf28
                 output_kaku = output_kaku.replace(word, dst)
     else:
         changed_list = "エラー"
@@ -162,11 +233,22 @@ else:
     changed_kaku = re.sub(r"(\|)(.*)(《)(・)*(》)", r"《《\2》》", output_kaku)
 
     #調整
+<<<<<<< HEAD
     mode = mode
     changed_list = changed_list
     changed_kaku = re.findall(ptrnFin_kaku, output_kaku) + re.findall(ptrnSt_kaku, output_kaku)
     changed_narou = re.findall(ptrnFin_kaku, output_narou)
     changed_alpha = re.findall(ptrn_alpha, output_alpha)
+=======
+    #output_kaku = output_kaku
+    #output_narou = output_narou
+    #output_alpha = output_alpha
+    mode = mode
+    changed_list = changed_list
+    changed_kaku = regex.findall(ptrnFin_kaku, output_kaku)+regex.findall(ptrnSt_kaku, output_kaku)
+    changed_narou = regex.findall(ptrnFin_kaku, output_narou)
+    changed_alpha = regex.findall(ptrn_alpha, output_alpha)
+>>>>>>> 2da8a45491965a3ca1034e14119d7126a474bf28
 
     #リスト型を文字列に変換
     changed_list = '  '.join(changed_list)
@@ -175,4 +257,8 @@ else:
     changed_alpha = '  '.join(changed_alpha)
 
     print(html)
+<<<<<<< HEAD
     print(result % (mode, output_kaku, output_narou, output_alpha, changed_list, changed_kaku, changed_narou, changed_alpha))
+=======
+    print(result % (mode,output_kaku,output_narou,output_alpha,changed_list,changed_kaku,changed_narou,changed_alpha))
+>>>>>>> 2da8a45491965a3ca1034e14119d7126a474bf28
